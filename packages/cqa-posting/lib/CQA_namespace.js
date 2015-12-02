@@ -1,1 +1,1 @@
-CQAPosts = new Mongo.Collection("posts");
+CQAPostings = new Mongo.Collection("posts");

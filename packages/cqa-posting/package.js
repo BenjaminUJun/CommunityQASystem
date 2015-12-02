@@ -93,6 +93,6 @@ Package.onUse(function (api) {
   });
   api.addFiles(CQA_languagesPaths, ["client", "server"]);
 
-  api.export('CQAPosts');
+  api.export('CQAPostings');
 
 });
