@@ -32,7 +32,7 @@ CQAPostings.getAuthorName = function (postItem) {
 	if (userOfPost) {
 		return userOfPost.getDisplayName();
 	} else {
-		return postItem.author;
+		return postItem.CQAauthor;
 	}
 };
 CQAPostings.helpers({getAuthorName: function () {return CQAPostings.getAuthorName(this);}});
