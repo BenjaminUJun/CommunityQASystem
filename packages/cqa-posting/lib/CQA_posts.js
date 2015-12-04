@@ -4,7 +4,7 @@ CQAPostings.schema = new SimpleSchema({
 		optional: true
 	},
 
-  createdDate: {
+  	createdDate: {
 		type: Date,
 		optional: true
 	},
