@@ -71,6 +71,11 @@ CQAPostings.schema = new SimpleSchema({
 		optional: true
 	},
 
+	commenters: {
+		type: [String],
+		optional: true
+	},
+
 	lastCommentedDate: {
 		type: Date,
 		optional: true
