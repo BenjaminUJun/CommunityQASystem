@@ -163,18 +163,51 @@ Meteor.method({
 	},
 
 	rejectPost: function(postItemId) {
+		check(postItemId, String);
+		var postById = CQAPostings.findOne(postItemId);
 
+		if (CQAUsers.is.admin(Meteor.user())) {
+			
+			CQAPostings.update(postById._id, {$set: {status: CQAPostings.config.STATUS_REJECTED}});
+
+			CommunityQA.callbacks.runAsync("rejectionOfPostInAsync");
+
+		} else {
+			CQAMessages.flash('You need to be an admin to do that.', "error");
+		}
 	},
 
 	increasePostViews: function(postItemId, sessionItemId) {
+		check(postItemId, String);
+		check(sessionItemId, String);
 
+		this.unblock(); //Call inside a method invocation. Allow subsequent method from this client to begin running in a new fiber.
+
+		var viewsForCounter =  {_id: postItemId, CQAuserId: this.userId, sessionId: sessionItemId};
+
+		if (_.where(viewsForPost, viewsForCounter).length === 0) {
+			viewsForPost.push(viewsForCounter);
+			CQAPostings.update(postItemId, { $inc: { viewsCount: 1}});
+		}
 	},
 
 	deletePostById: function(postItemId) {
+		check(postItemId, String);
 
+		var postById = CQAPostings.findOne({_id: postItemId});
+
+		if(!Meteor.userId() || !CQAUsers.can.editById(Meteor.userId(), postById)) {
+			throw new Meteor.Error(606, 'You need permission to edit or delete a post');
+		}
+
+		CQAUsers.update({_id: postById.CQAuserId}, {$inc: {"communityqa.postsCount": -1}});
+
+		CQAPostings.remove(postItemId);
+
+		CommunityQA.callbacks.runAsync("deletionOfPostInAsync", postById);
 	},
 
 	checkForDuplicates: function(urlToCheck) {
-
+		CQAPostings.checkForSameUrl(urlToCheck);
 	}
 });
