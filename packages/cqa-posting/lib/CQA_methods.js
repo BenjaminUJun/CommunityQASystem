@@ -140,7 +140,7 @@ Meteor.method({
 		CQAPostings.update(postItem._id, {$set: {postedDate: postedDate}});
 	},
 
-	approvePost: function(postItemId) {
+	approvePostings: function(postItemId) {
 		check(postItemId, String);
 
 		var postById = CQAPostings.findOne(postItemId);
@@ -162,7 +162,7 @@ Meteor.method({
 		}
 	},
 
-	rejectPost: function(postItemId) {
+	rejectPostings: function(postItemId) {
 		check(postItemId, String);
 		var postById = CQAPostings.findOne(postItemId);
 
@@ -191,7 +191,7 @@ Meteor.method({
 		}
 	},
 
-	deletePostById: function(postItemId) {
+	deletePostingsById: function(postItemId) {
 		check(postItemId, String);
 
 		var postById = CQAPostings.findOne({_id: postItemId});

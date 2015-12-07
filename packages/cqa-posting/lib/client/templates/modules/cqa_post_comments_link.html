@@ -1,0 +1,8 @@
+<template name="post_comments_link">
+  <div class="{{moduleClass}}">
+    <a class="comments-link" href="{{this.getPageUrl}}"> <!--this.getPageUrl is a collection helpers in this package-->
+      <span class="comments-count">{{commentsCount}}</span>
+      <span class="comments-action">{{_ 'comments_'}}</span>
+    </a>
+  </div>
+</template>
