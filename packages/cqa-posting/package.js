@@ -50,7 +50,6 @@ Package.onUse(function (api) {
     'lib/client/templates/modules/post_avatars.js',
     'lib/client/templates/modules/post_comments_link.html',
     'lib/client/templates/modules/post_content.html',
-    'lib/client/templates/modules/post_content.js',
     'lib/client/templates/modules/post_discuss.html',
     'lib/client/templates/modules/post_domain.html',
     'lib/client/templates/modules/post_domain.js',
