@@ -1,0 +1,23 @@
+<template name="posts_list_compact">
+  <table>
+    <thead>
+      <tr>
+        <td>Post</td>
+        <td>{{labelOfField}}</td>
+      </tr>
+    </thead>
+    {{#each postsCursor}}
+      <tr>
+        <td><a href="{{pathFor 'postPage' _id=_id}}">{{title}}</a></td>
+        <td>{{valueOfField}}</td>
+      </tr>
+    {{/each}}
+    {{#if hasMorePosts}}
+      <tr>
+        <td colspan="2">
+          <a class="downvoted-more more-button grid-module" href="#"><span>{{_ "load_more"}}</span></a>
+        </td>
+      </tr>
+    {{/if}}
+  </table>
+</template>

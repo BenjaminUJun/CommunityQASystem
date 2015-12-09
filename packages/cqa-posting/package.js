@@ -2,23 +2,96 @@ Package.describe({
   name: 'jyu103:cqa-posting',
   version: '0.0.1',
   // Brief, one-line summary of the package.
-  summary: '',
+  summary: 'Community Question Answering System Posting',
   // URL to the Git repository containing the source code for this package.
-  git: '',
+  git: 'https://github.com/BenjaminUJun/CommunityQASystem.git',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'
 });
 
-Package.onUse(function(api) {
-  api.versionsFrom('1.2.1');
-  api.use('ecmascript');
-  api.addFiles('cqa-posting.js');
-});
+Package.onUse(function (api) {
 
-Package.onTest(function(api) {
-  api.use('ecmascript');
-  api.use('tinytest');
-  api.use('jyu103:cqa-posting');
-  api.addFiles('cqa-posting-tests.js');
+  api.versionsFrom(['METEOR@1.2']);
+
+  api.use([
+    'jyu103:cqa-lib@0.0.1',
+    'jyu103:cqa-translation@0.0.1',
+    'jyu103:cqa-settings@0.0.1',
+    'jyu103:cqa-users@0.0.1',
+    'jyu103:cqa-commenting@0.0.1'
+  ]);
+
+  api.addFiles([
+    'lib/CQA_namespace.js',
+    'lib/CQA_config.js',
+    'lib/CQA_posts.js',
+    'lib/CQA_parameters.js',
+    'lib/CQA_views.js',
+    'lib/CQA_helpers.js',
+    'lib/CQA_modules.js',
+    'lib/CQA_callbacks.js',
+    'lib/CQA_methods.js',
+    'lib/CQA_transitions.js',
+    'lib/CQA_menus.js',
+    'lib/CQA_routes.js'
+  ], ['client', 'server']);
+
+  api.addFiles([
+    'lib/client/templates/after_post_item.html',
+    'lib/client/templates/before_post_item.html',
+    'lib/client/templates/modules/post_actions.html',
+    'lib/client/templates/modules/post_actions.js',
+    'lib/client/templates/modules/post_admin.html',
+    'lib/client/templates/modules/post_admin.js',
+    'lib/client/templates/modules/post_author.html',
+    'lib/client/templates/modules/post_author.js',
+    'lib/client/templates/modules/post_avatars.html',
+    'lib/client/templates/modules/post_avatars.js',
+    'lib/client/templates/modules/post_comments_link.html',
+    'lib/client/templates/modules/post_content.html',
+    'lib/client/templates/modules/post_discuss.html',
+    'lib/client/templates/modules/post_domain.html',
+    'lib/client/templates/modules/post_domain.js',
+    'lib/client/templates/modules/post_info.html',
+    'lib/client/templates/modules/post_info.js',
+    'lib/client/templates/modules/post_rank.html',
+    'lib/client/templates/modules/post_rank.js',
+    'lib/client/templates/modules/post_title.html',
+    'lib/client/templates/modules/post_vote.html',
+    'lib/client/templates/modules/post_vote.js',
+    'lib/client/templates/post_body.html',
+    'lib/client/templates/post_edit.html',
+    'lib/client/templates/post_edit.js',
+    'lib/client/templates/post_item.html',
+    'lib/client/templates/post_item.js',
+    'lib/client/templates/post_page.html',
+    'lib/client/templates/post_page.js',
+    'lib/client/templates/post_submit.html',
+    'lib/client/templates/post_submit.js',
+    'lib/client/templates/views_menu.html',
+    'lib/client/templates/views_menu.js',
+    'lib/client/templates/main_posts_list.html',
+    'lib/client/templates/main_posts_list.js',
+    'lib/client/templates/posts_list/posts_list.html',
+    'lib/client/templates/posts_list/posts_list.js',
+    'lib/client/templates/posts_list/posts_list_compact.html',
+    'lib/client/templates/posts_list/posts_list_compact.js',
+    'lib/client/templates/posts_list/posts_list_controller.html',
+    'lib/client/templates/posts_list/posts_list_controller.js'
+  ], ['client']);
+
+  api.addFiles([
+    'lib/server/publications.js',
+    'lib/server/fastrender.js'
+  ], ['server']);
+
+  var CQA_languages = ["ar", "bg", "cs", "da", "de", "el", "en", "es", "et", "fr", "hu", "id", "it", "ja", "kk", "ko", "nl", "pl", "pt-BR", "ro", "ru", "sl", "sv", "th", "tr", "vi", "zh-CN"];
+  var CQA_languagesPaths = CQA_languages.map(function (language) {
+    return "translation/"+language+".i18n.json";
+  });
+  api.addFiles(CQA_languagesPaths, ["client", "server"]);
+
+  api.export('CQAPostings');
+
 });

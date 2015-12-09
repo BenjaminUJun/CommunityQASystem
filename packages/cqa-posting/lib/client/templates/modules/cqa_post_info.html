@@ -1,0 +1,8 @@
+<template name="post_info">
+  <div class="{{moduleClass}}" aria-live="off">
+    <span class="points">{{baseScores}}</span>
+    <span class="unit">{{pointOrpointsForDisplay}}</span>
+    <!--timeAgo is a template register helper(in handlebars.js) that can be used in any template in this project-->
+    {{#if postedDate}}<span class="post-time">{{timeAgo postedDate}}</span>{{/if}} 
+  </div>
+</template>
