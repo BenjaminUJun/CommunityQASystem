@@ -1,10 +1,20 @@
+// Global Subscriptions in the core lib
+
+//Telescope.subsManager = new SubsManager({
+  // cache recent 50 subscriptions
+  //cacheLimit: 50,
+  // expire any subscription after 30 minutes
+  //expireIn: 30
+//});
+
 Template.post_submit.onCreated(function () {
-  Telescope.subsManager.subscribe('allUsersAdmin');
+  CommunityQA.subsManager.subscribe('allUsersAdmin');
 });
 
 Template.post_submit.helpers({
   postFields: function () {
-    return Posts.simpleSchema().getEditableFields(Meteor.user());
+    var currentUser = Meteor.user();
+    return CQAPostings.simpleSchema().getEditableFields(currentUser);
   }
 });
 
@@ -14,40 +24,41 @@ AutoForm.hooks({
     before: {
       method: function(doc) {
 
-        var post = doc;
-
-        this.template.$('button[type=submit]').addClass('loading');
-        this.template.$('input, textarea').not(":disabled").addClass("disabled").prop("disabled", true);
+        var postItem = doc;
+        var templateInstance = this.template;
+        templateInstance.$('button[type=submit]').addClass('loading');
+        templateInstance.$('input, textarea').not(":disabled").addClass("disabled").prop("disabled", true);
 
         if (!Meteor.user()) {
-          Messages.flash(i18n.t('you_must_be_logged_in'), 'error');
+          CQAMessages.flash(trans.t('you_must_be_logged_in'), 'error');
           return false;
         }
 
-        post = Telescope.callbacks.run("postSubmitClient", post);
+        postItem = CommunityQA.callbacks.run("postSubmitClient", postItem);
 
-        return post;
+        return postItem;
       }
     },
 
     onSuccess: function(operation, post) {
-      Events.track("new post", {'postId': post._id});
-      var template = this.template;
-      Telescope.subsManager.subscribe('singlePost', post._id, function () {
-        template.$('button[type=submit]').removeClass('loading');
+      Events.track("new post", {'CQApostId': post._id});
+      var templateOnSuc = this.template;
+      CommunityQA.subsManager.subscribe('singlePost', post._id, function () {
+        templateOnSuc.$('button[type=submit]').removeClass('loading');
         FlowRouter.go('postPage', post);
       });
     },
 
     onError: function(operation, error) {
-      this.template.$('button[type=submit]').removeClass('loading');
-      this.template.$('.disabled').removeClass("disabled").prop("disabled", false);
+      var templateOnErr = this.template;
+      templateOnErr.$('button[type=submit]').removeClass('loading');
+      templateOnErr.$('.disabled').removeClass("disabled").prop("disabled", false);
 
-      Messages.flash(error.message.split('|')[0], 'error'); 
-      Messages.clearSeen();
+      CQAMessages.flash(error.message.split('|')[0], 'error'); 
+      CQAMessages.clearSeen();
       if (error.error === "603") {
-        var dupePostId = error.reason.split('|')[1];
-        FlowRouter.go('postPage', {slug: '_', _id: dupePostId});
+        var dupePostingsId = error.reason.split('|')[1];
+        FlowRouter.go('postPage', {slug: '_', _id: dupePostingsId});
       }
     }
 
