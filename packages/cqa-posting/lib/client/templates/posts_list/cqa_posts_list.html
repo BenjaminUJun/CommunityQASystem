@@ -1,0 +1,42 @@
+<template name="posts_list">
+  <div class="posts-wrapper grid">
+    <div class="posts list {{postingsLayout}}" aria-live="polite">
+      {{#each postsCursor}}
+        {{> before_post_item}}
+        {{> post_item post=this}}
+        {{> after_post_item}}
+      {{/each}}
+    </div>
+    <!--postsLoadMore template instance will inherit the data context of posts_list-->
+    {{> postsLoadMore}}
+  </div>
+</template>
+
+<template name="postsListIncoming">
+  {{#if count}}
+    <a class="more-button show-new grid-module" href="">
+      <span>
+        {{_ "view"}} {{count}} {{_ "new"}} {{pluralize count "post"}}
+      </span>
+    </a>
+  {{/if}}
+</template>
+
+<template name="postsLoadMore">
+  <div class="posts-load-more">
+    {{#if postsReady}}
+      {{#if hasPostings}}
+        {{#if showLoadingMoreButton}}
+          <a class="more-button" href="#"><span>{{_ "load_more"}}</span></a>
+        {{/if}}
+        {{#if showScrollByInfinite}}
+          <div class="posts-loading">{{> loading}}</div>
+        {{/if}}
+      {{else}}
+        <div class="no-posts">{{_ "sorry_we_couldnt_find_any_posts"}}</div>
+      {{/if}}
+    {{else}}
+      <div class="posts-loading">{{> loading}}</div>
+    {{/if}}
+  </div>
+</template>
