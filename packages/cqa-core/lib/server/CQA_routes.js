@@ -23,6 +23,7 @@ Picker.route('/out', function (params, req, res, next) {
 			var ipItem = req.connection.remoteAddress;
 			addPostingsClicks(postItem._id, ipItem);
 			res.writeHead(302, {'Location': getQuery.url});
+			res.end();
 		} else {
 			res.end('Invalid URL');
 		}
