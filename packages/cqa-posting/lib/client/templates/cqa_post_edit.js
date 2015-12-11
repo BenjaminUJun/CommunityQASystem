@@ -51,7 +51,7 @@ AutoForm.hooks({
     },
 
     onSuccess: function(formType, post) {
-      Events.track("edit post", {'CQApostId': post._id});
+      CQAEventings.track("edit post", {'CQApostId': post._id});
       FlowRouter.go('postPage', post);
     },
 

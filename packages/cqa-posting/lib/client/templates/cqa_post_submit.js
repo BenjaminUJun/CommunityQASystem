@@ -41,7 +41,7 @@ AutoForm.hooks({
     },
 
     onSuccess: function(operation, post) {
-      Events.track("new post", {'CQApostId': post._id});
+      CQAEventings.track("new post", {'CQApostId': post._id});
       var templateOnSuc = this.template;
       CommunityQA.subsManager.subscribe('singlePost', post._id, function () {
         templateOnSuc.$('button[type=submit]').removeClass('loading');

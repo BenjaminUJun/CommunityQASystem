@@ -30,11 +30,11 @@ Template.post_vote.events({
       Messages.flash(i18n.t("please_log_in_first"), "info");
     } else if (currentUser.hasUpvoted(postItem)) {
       Meteor.call('cancelUpvotePost', postItem._id, function(){
-        Events.track("post upvote cancelled", {'_id': postItem._id});
+        CQAEventings.track("post upvote cancelled", {'_id': postItem._id});
       });        
     } else {
       Meteor.call('upvotePost', postItem._id, function(){
-        Events.track("post upvoted", {'_id': postItem._id});
+        CQAEventings.track("post upvoted", {'_id': postItem._id});
       });  
     }
   },
@@ -48,11 +48,11 @@ Template.post_vote.events({
     }
     if (currentUser.hasDownvoted(postItem)) {
       Meteor.call('cancelDownvotePost', postItem._id, function(){
-        Events.track("post downvote cancelled", {'_id': postItem._id});
+        CQAEventings.track("post downvote cancelled", {'_id': postItem._id});
       });        
     } else {
       Meteor.call('downvotePost', postItem._id, function(){
-        Events.track("post downvoted", {'_id': postItem._id});
+        CQAEventings.track("post downvoted", {'_id': postItem._id});
       });  
     }
   }  
