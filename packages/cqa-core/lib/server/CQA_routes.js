@@ -15,6 +15,8 @@ var addPostingsClicks = function (postItemId, ipItem) {
 	}
 };
 
+
+// API from https://github.com/BenjaminUJun/picker
 Picker.route('/out', function (params, req, res, next) {
 	var getQuery = params.query;
 	if (getQuery.url) {
